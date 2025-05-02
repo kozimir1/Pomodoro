@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class TaskServise:
+class TaskService:
     task_repository: TaskRepository
     task_cache: CacheRepository
 
