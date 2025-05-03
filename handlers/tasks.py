@@ -1,10 +1,10 @@
-from fastapi import APIRouter, status,Depends
+from fastapi import APIRouter, status, Depends
 from typing import Annotated
 
-from dependecy import get_tasks_repository, get_cache_repository, get_servise_repository
+from dependecy import get_tasks_repository, get_cache_repository, get_service_repository
 from repository import TaskRepository, CacheRepository
 from schema.task import TaskSchema
-from servise import TaskServise
+from servise import TaskService
 
 from fixtures import tasks as fixture_tasks
 
@@ -15,7 +15,7 @@ router=APIRouter(prefix='/task', tags=['task'])
 @router.get('/all',
             response_model=list[TaskSchema]
             )
-async def get_task(task_servise: Annotated[TaskServise, Depends(get_servise_repository)]):
+async def get_task(task_servise: Annotated[TaskService, Depends(get_service_repository)]):
     return task_servise.get_tasks()
 
 

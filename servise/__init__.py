@@ -1,3 +1,5 @@
-from servise.task import TaskServise
+from servise.task import TaskService
+from servise.user import UserService
+from servise.auth import AuthService
 
-__ALL__ = ['TaskServise']
+__ALL__ = ['TaskService', 'UserService', 'AuthService']
