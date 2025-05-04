@@ -9,6 +9,7 @@ class TaskSchema(BaseModel):
     name: str | None = None
     pomodoro_count: int | None = None
     category_id: int   # = Field(exclude=True)
+    user_id: int
 
     # class Config:
     #     from_attributes = True
@@ -21,3 +22,9 @@ class TaskSchema(BaseModel):
         if self.pomodoro_count is None and self.name is None:
             raise ValueError("name and pomodoro count cannot be None")
         return self
+
+
+class TaskCreateSchema(BaseModel):
+    name: str | None = None
+    pomodoro_count: int | None = None
+    category_id: int
