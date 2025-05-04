@@ -9,5 +9,3 @@ class UserProfile(Base):
     password: Mapped[str] = mapped_column(nullable=False)
 
 
-
-

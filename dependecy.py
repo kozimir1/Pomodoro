@@ -19,7 +19,7 @@ def get_cache_repository() -> CacheRepository:
     return CacheRepository(redis)
 
 
-def get_service_repository(
+def get_task_service(
         task_repository: Annotated[TaskRepository, Depends(get_tasks_repository)],
         task_cache: Annotated[CacheRepository, Depends(get_cache_repository)]
 ) -> TaskService:
