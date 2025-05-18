@@ -4,6 +4,7 @@ from dataclasses import dataclass
 import datetime as dt
 from datetime import timedelta, timezone
 
+from client import GoogleClient
 from exception import UserNotFoundException, UserNotCorrectPasswordException, TokenExpired, TokenNotCorrect
 from models import UserProfile
 from repository import UserRepository
@@ -15,6 +16,14 @@ from settings import Settings
 class AuthService:
     user_repository: UserRepository
     settings: Settings
+    google_client: GoogleClient
+
+    def google_auth(self, code: str):
+        user_data = self.google_client.get_user_info(code)
+        print(user_data)
+
+    def get_google_redirect_url(self) -> str:
+        return self.settings.google_redirect_url
 
     def login(self, username: str, password: str) -> UserLoginSchema:
         user = self.user_repository.get_user_by_name(username)
