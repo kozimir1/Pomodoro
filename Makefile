@@ -1,6 +1,7 @@
 .DEFAULT_GOAL := help
 run: ## run the application fastapi dev fastapi run main.py
-	 fastapi dev
+	# fastapi dev
+	fastapi run main.py
 install: ## Install a dependency using poetry
 	@echo "Installing dependency $(LIBRARY)"
 	poetry add $(LIBRARY)

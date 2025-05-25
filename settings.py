@@ -21,7 +21,8 @@ class Settings(BaseSettings):
     GOOGLE_CLIENT_ID: str =''
     GOOGLE_REDIRECT_URI: str=''
     GOOGLE_SECRET_KEY: str=''
-    GOOGLE_TOKEN_URL: str='https://accounts.google.com/o/oauth2/token'
+    GOOGLE_TOKEN_URL: str= 'https://accounts.google.com/o/oauth2/token'
+    # 'https://www.googleapis.com/oauth2/v4/token'
 
 
 

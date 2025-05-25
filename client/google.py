@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 import requests
 
+from schema import GoogleUserData
 from settings import Settings
 
 
@@ -9,11 +10,12 @@ from settings import Settings
 class GoogleClient:
     settings: Settings
 
-    def get_user_info(self, code: str) -> dict:
-        access_token = self.settings.get_access_token(code)
-        user_info = requests.get('https://www.googleapis.com/oauth2/v4/userinfo?access_token={}',
+    def get_user_info(self, code: str) -> GoogleUserData:
+        access_token = self._get_user_access_token(code=code)
+        user_info = requests.get('https://www.googleapis.com/oauth2/v3/userinfo',
                                  headers={'Authorization': f'Bearer {access_token}'})
-        return user_info.json()
+        return GoogleUserData(**user_info.json(),
+                              access_token=access_token)
 
     def _get_user_access_token(self, code: str) -> str:
         data = {
@@ -23,5 +25,5 @@ class GoogleClient:
             'redirect_uri': self.settings.GOOGLE_REDIRECT_URI,
             'grant_type': 'authorization_code',
         }
-        response = requests.get(self.settings.GOOGLE_REDIRECT_URI, data=data)
+        response = requests.post(self.settings.GOOGLE_TOKEN_URL, data=data)
         return response.json()['access_token']

@@ -18,7 +18,6 @@ class TaskSchema(BaseModel):
 
     @model_validator(mode='after')
     def name_and_pomodoro_count(self):
-        print(self)
         if self.pomodoro_count is None and self.name is None:
             raise ValueError("name and pomodoro count cannot be None")
         return self
