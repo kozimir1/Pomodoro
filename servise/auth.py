@@ -38,6 +38,9 @@ class AuthService:
     def get_google_redirect_url(self) -> str:
         return self.settings.google_redirect_url
 
+    def get_yandex_redirect_url(self) -> str:
+        return self.settings.yandex_redirect_url
+
     def login(self, username: str, password: str) -> UserLoginSchema:
         user = self.user_repository.get_user_by_name(username)
         self._validate_auth_user(user, password)
