@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     YANDEX_CLIENT_ID: str =''
     YANDEX_REDIRECT_URI: str=''
     YANDEX_SECRET_KEY: str=''
+    YANDEX_TOKEN_URL: str ='https://oauth.yandex.ru/token'
 
 
 

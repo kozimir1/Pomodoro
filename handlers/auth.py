@@ -49,4 +49,4 @@ async def yandex_login(auth_service: Annotated[AuthService, Depends(get_auth_ser
 @router.get("/yandex")
 async def yandex_auth(auth_service: Annotated[AuthService, Depends(get_auth_service)],
                       code: str):
-    print(code)
+    return auth_service.yandex_auth(code=code)

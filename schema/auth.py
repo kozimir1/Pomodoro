@@ -7,3 +7,12 @@ class GoogleUserData(BaseModel):
     verified_email: bool = Field(alias="email_verified")
     name: str
     access_token: str
+
+
+class YandexUserData(BaseModel):
+    id: str
+    login: str
+    default_email: str
+    name: str = Field(alias="real_name")
+    access_token: str
+
