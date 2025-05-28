@@ -4,7 +4,8 @@ from dataclasses import dataclass
 import datetime as dt
 from datetime import timedelta, timezone
 
-from client import GoogleClient
+from client import GoogleClient, YandexClient
+
 from exception import UserNotFoundException, UserNotCorrectPasswordException, TokenExpired, TokenNotCorrect
 from models import UserProfile
 from repository import UserRepository
@@ -17,8 +18,9 @@ class AuthService:
     user_repository: UserRepository
     settings: Settings
     google_client: GoogleClient
+    yandex_client: YandexClient
 
-    def google_auth(self, code: str):
+    def google_auth(self, code: str) -> UserLoginSchema:
         user_data = self.google_client.get_user_info(code)
         if user := self.user_repository.get_user_by_email(email=user_data.email):
             access_token = self.generate_access_token(user_id=user.id)
@@ -37,6 +39,26 @@ class AuthService:
 
     def get_google_redirect_url(self) -> str:
         return self.settings.google_redirect_url
+
+    def yandex_auth(self, code: str) -> UserLoginSchema:
+        user_data = self.yandex_client.get_user_info(code=code)
+        if user := self.user_repository.get_user_by_email(email=user_data.default_email):
+            access_token = self.generate_access_token(user_id=user.id)
+            print('userLogin')
+            return UserLoginSchema(user_id=user.id, access_token=access_token)
+        create_user_data = UserCreateSchema(
+                                            name=user_data.name,
+                                            email=user_data.default_email,
+                                            yandex_access_token=user_data.access_token
+                                            )
+        create_user = self.user_repository.create_user(create_user_data)
+        print('userCreate')
+        access_token = self.generate_access_token(user_id=create_user.id)
+        return UserLoginSchema(user_id=create_user.id, access_token=access_token)
+
+
+    def get_yandex_redirect_url(self) -> str:
+        return self.settings.yandex_redirect_url
 
     def login(self, username: str, password: str) -> UserLoginSchema:
         user = self.user_repository.get_user_by_name(username)

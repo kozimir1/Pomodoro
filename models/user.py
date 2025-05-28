@@ -10,5 +10,6 @@ class UserProfile(Base):
     name: Mapped[str] = mapped_column(nullable=True)
     email: Mapped[str] = mapped_column(nullable=True)
     google_access_token: Mapped[str] = mapped_column(nullable=True)
+    yandex_access_token: Mapped[str] = mapped_column(nullable=True)
 
 
