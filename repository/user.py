@@ -15,9 +15,7 @@ class UserRepository:
 
     async def get_user_by_email(self, email: str) -> UserProfile | None:
         query = select(UserProfile).where(UserProfile.email == email)
-        print('sfsdfsdfsfsdfsfsfsfsfsfsf')
         async with self.db_session as session:
-            print(1231321321321321312)
             return (await session.execute(query)).scalar_one_or_none()
 
     async def create_user(self, data: UserCreateSchema) -> UserProfile:
